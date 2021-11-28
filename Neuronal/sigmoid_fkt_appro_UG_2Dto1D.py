@@ -7,8 +7,9 @@
 # import von TF
 # Bereitet die grafische Ausgabe mittels contourf vor
 # und rastert die Eingabewerte fuer das Modell
+import random
 
-
+import numpy
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_squared_error
 from keras.models import Sequential
@@ -20,32 +21,41 @@ from math import *
 from keras import models
 from keras import layers
 from matplotlib import pyplot
-from UniformGrid.UGv2 import X
+from UniformGrid.Uniform_Grid_2D_N import UG_2dN
+import random
 
-x = X # Gitter in 2 Dimensionen mit 4096 Punkten, 2048 pro Dimension
+x = UG_2dN
 
 x1= np.transpose(x)
-a1=x1**2
-a2=a1[:1]
-a3=a1[1:2]
-a4=a2+a3
-a4=a4.reshape(25,)
-train_data=np.random.choice(a4,20,False) #zufällig 3600 Punkte aus z ausgewählt
-print(train_data.shape)
-p=list(set(a4)-set(train_data)) #Differenzmenge gebildet um testmenge zu finden
-test_data=np.array(p)
-print(test_data.shape)
-y1 = 1/(1+e**-train_data)
-y2 =1/(1+e**-test_data)
-#scale_y = MinMaxScaler()
-#y = scale_y.fit_transform(y)
-train_targets=y1
-test_targets=y2
+#samplefkt f(x)=1/(1+e^(x1^2+x2^2))
+y=1/(1+np.exp(-(x1[0,:]**2+x1[1,:]**2)))
+testidx=random.sample(range(4096), 400)
+xtest=x1[:,testidx]
+ytest=y[testidx]
+trainidx=[i for i in range(4096)if i not in testidx]
+xtrain=x1[:,trainidx]
+ytrain=y[trainidx]
 
-train_data= train_data.reshape(3600,1)
-train_targets= train_targets.reshape(3600,1)
-test_data= test_data.reshape(496,1)
-test_targets= test_targets.reshape(496,1)
+
+
+#fig = plt.figure(figsize=(5.8, 4.7), dpi=400)
+#ax = fig.add_subplot(111)  # , projection='3d')
+#out = ax.scatter(x1[0,:], x1[1,:], s=6, c=y, cmap=cm.hot)
+#plt.show()
+#plt.savefig("Bild.png", dpi=150)
+
+
+
+train_data= xtrain
+train_targets= ytrain
+test_data= xtest
+test_targets= ytest
+
+train_data= train_data.reshape(3696,2)
+train_targets= train_targets.reshape(3696,1)
+test_data= test_data.reshape(400,2)
+test_targets= test_targets.reshape(400,1)
+
 def build_model():
     model = models.Sequential()
     model.add(layers.Dense(64,activation='relu',input_shape=(train_data.shape[1],)))
@@ -55,7 +65,7 @@ def build_model():
     return model
 
 model= build_model()
-model.fit(train_data,train_targets,epochs=370,batch_size=16,verbose=0)
+model.fit(train_data,train_targets,epochs=370,batch_size=16,verbose=1)
 test_mse_score,test_mae_score=model.evaluate(test_data,test_targets)
 print(test_mse_score)
 print(test_mae_score)

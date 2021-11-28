@@ -19,23 +19,32 @@ import numpy as np
 from math import *
 from keras import models
 from keras import layers
+import random
 from matplotlib import pyplot
-from Uniform_Grid_1d import UG_1d
+from UniformGrid.Uniform_Grid_1D import UG_1d
 
 x = UG_1d
-y = -(1/4)*x**4+(1/3)*x**3+(1/2)*x**2-x+1
 
-print(y.shape)
-#x = x.reshape((len(x), 1))
-#y = y.reshape((len(y), 1))
-#scale_x = MinMaxScaler()
-#x = scale_x.fit_transform(x)
-train_data=x[:3000]
-test_data=x[3001:4096]
-#scale_y = MinMaxScaler()
-#y = scale_y.fit_transform(y)
-train_targets=y[:3000]
-test_targets=y[3001:4096]
+x1= np.transpose(x)
+#samplefkt f(x)=polyfkt
+y = 30*x**(4)-60*x**(3)+35*x**(2)-4.5*x
+testidx=random.sample(range(4096), 400)
+xtest=x1[:,testidx]
+ytest=y[testidx]
+trainidx=[i for i in range(4096)if i not in testidx]
+xtrain=x1[:,trainidx]
+ytrain=y[trainidx]
+
+train_data= xtrain
+train_targets= ytrain
+test_data= xtest
+test_targets= ytest
+
+train_data= train_data.reshape(3696,1)
+train_targets= train_targets.reshape(3696,1)
+test_data= test_data.reshape(400,1)
+test_targets= test_targets.reshape(400,1)
+
 
 def build_model():
     model = models.Sequential()

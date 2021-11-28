@@ -61,7 +61,7 @@ x4=s[:,4]
 x5=s[:,5]
 x6=s[:,6]
 x7=s[:,7]
-
+print(x0.shape)
 #plt.scatter(x0, x1)
 
 #plt.show()

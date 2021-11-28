@@ -19,7 +19,7 @@ import numpy as np
 from math import *
 
 
-x = np.linspace(-20,20,300)
+x = np.linspace(-1,1,10)
 y = 1/(1+e**-x)
 x = x.reshape((len(x), 1))
 print(x.shape)
@@ -29,7 +29,7 @@ x = scale_x.fit_transform(x)
 print(x.shape)
 scale_y = MinMaxScaler()
 y = scale_y.fit_transform(y)
-
+r=0
 model = Sequential()
 model.add(Dense(64, input_dim=1, activation='relu', kernel_initializer='he_uniform'))
 model.add(Dense(10, activation='relu', kernel_initializer='he_uniform'))

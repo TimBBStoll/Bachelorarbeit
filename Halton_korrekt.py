@@ -2,7 +2,7 @@
 
 # Press Umschalt+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-from Uniform_Grid_10d import s
+from UniformGrid.Uniform_Grid_10D import s
 from random_korrekt import rand_6d
 from sklearn.metrics import mean_squared_error
 
@@ -58,7 +58,14 @@ def halton(dim, n_sample):
 
 x = halton(6,4096)
 Halton_6D=halton(6,4096)
-print(x.shape)
+Halton_1D=halton(1,4096)
+Halton_2D=halton(2,4096)
+Halton_3D=halton(3,4096)
+Halton_4D=halton(4,4096)
+Halton_10D=halton(10,4096)
+Halton_12D=halton(12,4096)
+
+
 #x_h = x[:,6]
 #y_h = x[:,8]
 

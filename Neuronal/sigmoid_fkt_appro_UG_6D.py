@@ -20,7 +20,7 @@ from math import *
 from keras import models
 from keras import layers
 from matplotlib import pyplot
-from Uniform_Grid_6d_N import UG_6dN
+from UniformGrid.Uniform_Grid_6D_N import  UG_6dN
 
 x = UG_6dN
 

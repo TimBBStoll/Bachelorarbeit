@@ -2,42 +2,36 @@
 
 # Press Umschalt+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-import numpy as np
-from Halton_korrekt import halton
-from Uniform_Grid_10d import UG_10d
 
-def count_range_in_list(li, min, max):
-	ctr = 0
-	for a,b,c,d,e,f,g,h,i,j in li:
-		if min <= a <= max and min <= b <= max and min <= c <= max and min <= d <= max and min <= e <= max and min <= f <= max and min <= g <= max and min <= h <= max and min <= i <= max and min <= j <= max:
-			ctr += 1
-	return ctr
 
-a=0
-b=1
-c=0.0
-d=0.5
+# import von TF
+# Bereitet die grafische Ausgabe mittels contourf vor
+# und rastert die Eingabewerte fuer das Modell
 
-n=1024
-Dim=10
+from numpy import arange
+from numpy import exp
+from numpy import sqrt
+from numpy import cos
+from numpy import e
+from numpy import pi
+from numpy import meshgrid
+import matplotlib.pyplot as plt
 
-i=1
-DN=0
-D2=0
-x=0
+def objective(x, y):
+ return -20.0 * exp(-0.2 * sqrt(0.5 * (x**2 + y**2)))-exp(0.5 * (cos(2 *
+  pi * x)+cos(2 * pi * y))) + e + 20
 
-rand = np.random.rand(n,Dim)
-while i<=n:
-            d=i/n
-            q = count_range_in_list(rand, c, d)
-            d_H = ((q / len(rand)) - (d ** Dim))**2
-            print(d_H)
-            D2=D2+d_H #add Diskrepanz zum n-Cube davor
-            #Di=d_H+DN
-            DN=d_H
-            #print(Di)
-            i+=1
-Dis = np.sqrt((1 / n) * D2)
-#Dis2 = np.sqrt((1 / n) * Di)
-print(Dis)
-#print(Dis2)
+
+r_min, r_max = -32.768, 32.768
+xaxis = arange(r_min, r_max, 2.0)
+yaxis = arange(r_min, r_max, 2.0)
+x, y = meshgrid(xaxis, yaxis)
+results = objective(x, y)
+figure = plt.figure()
+axis = figure.gca( projection='3d')
+axis.plot_surface(x, y, results, cmap='jet', shade= "false")
+plt.show()
+plt.contour(x,y,results)
+plt.show()
+plt.scatter(x, y, results)
+plt.show()

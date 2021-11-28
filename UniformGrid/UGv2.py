@@ -37,10 +37,10 @@ X= np.array([ [0.1, 0.1],
               [0.5, 0.5]
                ])
 
-x_p = X[:,0]
-print(x_p)
-y_p = X[:,1]
+#x_p = X[:,0]
+#print(x_p)
+#y_p = X[:,1]
 
-plt.scatter(x_p, y_p)
+#plt.scatter(x_p, y_p)
 
-plt.show()
+#plt.show()
