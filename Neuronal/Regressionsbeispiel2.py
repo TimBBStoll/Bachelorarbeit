@@ -14,7 +14,8 @@ import tensorflow as tf
 import keras
 import matplotlib.pyplot as plt
 import numpy as np
-from Uniform_Grid_12d import s
+from UniformGrid.Uniform_Grid_12D import s
+
 (train_data, train_targets),(test_data,test_targets)=s
 print(train_data.shape)
 mean = train_data.mean(axis=0) #mittelwert
@@ -36,7 +37,7 @@ def build_model():
     return model
 k=4
 num_val_samples = len(train_data)//k
-num_epochs=100
+num_epochs=500
 all_mae_histories=[]
 
 
@@ -76,6 +77,6 @@ plt.ylabel('Mittlerer absoluter Fehler Validierung')
 plt.show()
 
 model= build_model()
-model.fit(train_data,train_targets,epochs=45,batch_size=16,verbose=0)
+model.fit(train_data,train_targets,epochs=370,batch_size=16,verbose=0)
 test_mse_score,test_mae_score=model.evaluate(test_data,test_targets)
 print(test_mae_score)

@@ -59,6 +59,17 @@ test_mse_score,test_mae_score=model.evaluate(test_data,test_targets)
 print(test_mse_score)
 print(test_mae_score)
 
+y=model.predict(test_data)
+
+plt.plot(test_data,y,"+")
+plt.plot(test_data,test_targets,"*")
+plt.show()
+
+pointwise_err=np.linalg.norm(y-test_targets,axis=(1))
+plt.plot(test_data,pointwise_err,"*")
+plt.yscale("log")
+plt.show()
+
 #x_plot = scale_x.inverse_transform(x)
 #y_plot = scale_y.inverse_transform(y)
 #yhat = model.predict(x)

@@ -58,8 +58,12 @@ def build_model():
     return model
 
 model= build_model()
-model.fit(train_data,train_targets,epochs=370,batch_size=16,verbose=0)
+model.fit(train_data,train_targets,epochs=370,batch_size=128,verbose=1)
 test_mse_score,test_mae_score=model.evaluate(test_data,test_targets)
+
+
+y=model.predict(test_data)
+
 print(test_mse_score)
 print(test_mae_score)
 

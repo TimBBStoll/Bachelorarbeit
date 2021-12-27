@@ -22,6 +22,11 @@ from keras import models
 from keras import layers
 from matplotlib import pyplot
 from Halton_korrekt import Halton_2D
+from matplotlib import cm
+from matplotlib import colors
+from numpy import arange
+from numpy import meshgrid
+from scatterplot import scatter_plot_2d
 
 x = Halton_2D
 
@@ -57,22 +62,19 @@ def build_model():
     return model
 
 model= build_model()
-model.fit(train_data,train_targets,epochs=370,batch_size=16,verbose=0)
+model.fit(train_data,train_targets,epochs=10,batch_size=16,verbose=0)
 test_mse_score,test_mae_score=model.evaluate(test_data,test_targets)
 print(test_mse_score)
 print(test_mae_score)
 
-#x_plot = scale_x.inverse_transform(x)
-#y_plot = scale_y.inverse_transform(y)
-#yhat = model.predict(x)
+y=model.predict(test_data)
 
-#yhat_plot = scale_y.inverse_transform(yhat)
-#print('mse: %.7f' % mean_squared_error(y_plot, yhat_plot))
+a=scatter_plot_2d(train_data[:,0],train_targets,train_data[:,1],lim_x=(0,1),lim_y=(0,1))
+#b=scatter_plot_2d(test_data[:,0],test_data[:,1],test_targets,lim_x=(0,1),lim_y=(0,1))
 
-#pyplot.scatter(x,y, label='Actual')
-#pyplot.scatter(x,yhat, label='Predicted')
-#pyplot.title('Input (x) versus Output (y)')
-#pyplot.xlabel('Input Variable (x)')
-#pyplot.ylabel('Output Variable (y)')
-#pyplot.legend()
-#pyplot.show()
+pointwise_err=np.linalg.norm(y-test_targets,axis=(1))
+plt.plot(test_data,pointwise_err,"*")
+plt.yscale("log")
+plt.show()
+
+

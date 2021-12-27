@@ -51,7 +51,7 @@ def build_model():
     model.add(layers.Dense(64,activation='relu',input_shape=(train_data.shape[1],)))
     model.add(layers.Dense(64,activation='relu',))
     model.add(layers.Dense(1))
-    model.compile(optimizer='rmsprop',loss='mse', metrics=['mae'])
+    model.compile(optimizer='adam',loss='mse', metrics=['mae'])
     return model
 
 model= build_model()
@@ -60,9 +60,21 @@ test_mse_score,test_mae_score=model.evaluate(test_data,test_targets)
 print(test_mse_score)
 print(test_mae_score)
 
+
+y=model.predict(test_data)
+
+plt.plot(test_data,y,"+")
+plt.plot(test_data,test_targets,"*")
+plt.show()
+
+pointwise_err=np.linalg.norm(y-test_targets,axis=(1))
+plt.plot(test_data,pointwise_err,"*")
+plt.yscale("log")
+plt.show()
+
 #x_plot = scale_x.inverse_transform(x)
 #y_plot = scale_y.inverse_transform(y)
-#yhat = model.predict(x)
+# #yhat = model.predict(x)
 
 #yhat_plot = scale_y.inverse_transform(yhat)
 #print('mse: %.7f' % mean_squared_error(y_plot, yhat_plot))

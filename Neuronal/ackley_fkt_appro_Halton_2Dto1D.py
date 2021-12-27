@@ -29,6 +29,9 @@ from numpy import e
 from numpy import pi
 from numpy import meshgrid
 import numpy as np
+from matplotlib import cm
+from scatterplot import scatter_plot_2d
+from matplotlib import colors
 
 x = Halton_2D
 
@@ -69,26 +72,22 @@ def build_model():
     model.add(layers.Dense(64,activation='relu',input_shape=(train_data.shape[1],)))
     model.add(layers.Dense(64,activation='relu',))
     model.add(layers.Dense(1))
-    model.compile(optimizer='rmsprop',loss='mse', metrics=['mae'])
+    model.compile(optimizer='adam',loss='mse', metrics=['mae'])
     return model
 
 model= build_model()
-model.fit(train_data,train_targets,epochs=370,batch_size=16,verbose=0)
+model.fit(train_data,train_targets,epochs=21,batch_size=16,verbose=0)
 test_mse_score,test_mae_score=model.evaluate(test_data,test_targets)
 print(test_mse_score)
 print(test_mae_score)
 
-#x_plot = scale_x.inverse_transform(x)
-#y_plot = scale_y.inverse_transform(y)
-#yhat = model.predict(x)
+y=model.predict(test_data)
+a=scatter_plot_2d(train_data[:,0],train_data[:,1],train_targets,lim_x=(0,1),lim_y=(0,1),log=False,color_map=1)
+b=scatter_plot_2d(test_data[:,0],test_data[:,1],y,lim_x=(0,1),lim_y=(0,1),log=False,color_map=1)
 
-#yhat_plot = scale_y.inverse_transform(yhat)
-#print('mse: %.7f' % mean_squared_error(y_plot, yhat_plot))
 
-#pyplot.scatter(x,y, label='Actual')
-#pyplot.scatter(x,yhat, label='Predicted')
-#pyplot.title('Input (x) versus Output (y)')
-#pyplot.xlabel('Input Variable (x)')
-#pyplot.ylabel('Output Variable (y)')
-#pyplot.legend()
-#pyplot.show()
+pointwise_err=np.linalg.norm(y-test_targets,axis=(1))
+plt.plot(test_data,pointwise_err,"*")
+plt.yscale("log")
+plt.show()
+
