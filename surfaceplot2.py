@@ -8,19 +8,12 @@
 # Bereitet die grafische Ausgabe mittels contourf vor
 # und rastert die Eingabewerte fuer das Modell
 import matplotlib.pyplot as plt
-import random
-from numpy import arange
-from numpy import exp
-from numpy import sqrt
+
 from numpy import cos
-from numpy import e
-from numpy import pi
+
 from numpy import meshgrid
 import numpy as np
-from matplotlib import cm
-from matplotlib import colors
-from Halton_korrekt import Halton_2D
-from UniformGrid.Uniform_Grid_2D_Probe import UG_2dP
+
 from UniformGrid.Uniform_Grid_2D_N import UG_2dN
 
 def surface_plot_2d1(x_in: np.ndarray,y_in: np.ndarray, z_in: np.ndarray, lim_x: tuple = (0, 10), lim_y: tuple = (0, 10),
@@ -76,5 +69,5 @@ Z= objective(X11,Y11)
 #x=x.reshape(10,1)
 #y=y.reshape(10,1)
 
-a=surface_plot_2d1(X11,Y11,Z,log=False,color_map=1,lim_x=(0,1),lim_y=(0,1))
+a=surface_plot_2d1(X11,Y11,Z,log=False,color_map=1,lim_x=(0,10),lim_y=(0,10))
 
