@@ -4,7 +4,7 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 import numpy as np
 from Halton_korrekt import halton
-from Uniform_Grid_6d import UG_6d
+from UniformGrid.Uniform_Grid_6D import UG_6d
 def count_range_in_list(li, min, max):
 	ctr = 0
 	for a,b,c,d,e,f in li:
@@ -18,7 +18,7 @@ b=1
 
 
 Dim=6
-n=1024
+n=4096
 rand=np.random.rand(n,Dim)
 
 
@@ -55,5 +55,5 @@ DisG6 = np.sqrt((1 / n) * D1)
 DisH6 = np.sqrt((1 / n) * D2)
 DisR6 = np.sqrt((1 / n) * D3)
 #print(DisG6)
-print(DisH6)
+#print(DisH6)
 #print(DisR6)

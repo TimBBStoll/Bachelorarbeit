@@ -28,5 +28,5 @@ for x in range(0,20):
 Ew12=D3/20
 
 var=np.var(c)
-print(var)
-print(Ew12)
+#print(var)
+#print(Ew12)

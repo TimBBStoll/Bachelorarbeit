@@ -25,8 +25,8 @@ for x in range(0,20):
     #print(D3)
     c.append(Dis)
     x+=1
-Ew3=D3/20
+Ew3N=D3/20
 
 var=np.var(c)
 print(var)
-print(Ew3)
+print(Ew3N)

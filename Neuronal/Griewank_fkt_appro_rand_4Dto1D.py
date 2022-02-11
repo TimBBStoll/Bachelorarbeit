@@ -13,6 +13,7 @@
 import random
 from math import *
 from keras import models
+import tensorflow as tf
 from keras import layers
 from numpy import exp
 from numpy import sqrt
@@ -21,6 +22,7 @@ from numpy import e
 from numpy import pi
 from numpy import meshgrid
 import numpy as np
+import matplotlib.pyplot as plt
 from random_korrekt import rand_4d
 
 x = rand_4d
@@ -41,46 +43,76 @@ y=1+(1/4000)*a**2+(1/4000)*b**2+(1/4000)*c**2+(1/4000)*d**2-cos(a)*cos((1/2)*b*2
 testidx=random.sample(range(4096), 400)
 xtest=x1[:,testidx]
 ytest=y[testidx]
-trainidx=[i for i in range(4096)if i not in testidx]
+
+trainidx1=[i for i in range(4096)if i not in testidx]
+
+validx= random.sample(trainidx1, 600)
+xval=x1[:,validx]
+yval=y[validx]
+
+trainidx=[i for i in range(4096)if i not in testidx+validx]
 xtrain=x1[:,trainidx]
 ytrain=y[trainidx]
 
 train_data= xtrain
 train_targets= ytrain
+val_data= xval
+val_targets= yval
 test_data= xtest
 test_targets= ytest
+train_data= np.transpose(train_data)
+#train_targets= np.transpose(train_targets)
+val_data= np.transpose(val_data)
+#val_targets= np.transpose(val_targets)
+test_data= np.transpose(test_data)
+#test_targets= np.transpose(test_targets)
 
-train_data= train_data.reshape(3696,4)
-train_targets= train_targets.reshape(3696,1)
-test_data= test_data.reshape(400,4)
-test_targets= test_targets.reshape(400,1)
-
-
+score=[]
 def build_model():
     model = models.Sequential()
     model.add(layers.Dense(64,activation='relu',input_shape=(train_data.shape[1],)))
-    model.add(layers.Dense(64,activation='relu',))
+    model.add(layers.Dense(64, activation='relu', ))
+    model.add(layers.Dense(64, activation='relu', ))
+    model.add(layers.Dense(64, activation='relu', ))
     model.add(layers.Dense(1))
-    model.compile(optimizer='rmsprop',loss='mse', metrics=['mae'])
+    model.compile(optimizer='adam',loss='mse', metrics=['mae'])
     return model
+k=1
+num_val_samples = len(val_data)
+num_epochs=1000
+all_mae_histories=[]
 
-model= build_model()
-model.fit(train_data,train_targets,epochs=370,batch_size=16,verbose=0)
+model = build_model()
+model.summary()
+mc_best = tf.keras.callbacks.ModelCheckpoint("Griewank_fkt_appro_rand_4Dto1D" + '/best_model', monitor='val_loss', mode='min',
+                                                     save_best_only=True, verbose=0)
+#history=model.fit(train_data,train_targets,validation_data=(val_data, val_targets), epochs=1000,batch_size=100,verbose=2,callbacks=mc_best)
+#history=model.fit(train_data,train_targets,validation_data=(val_data, val_targets), epochs=1000,batch_size=300,verbose=2,callbacks=mc_best)
+history=model.fit(train_data,train_targets,validation_data=(val_data, val_targets), epochs=num_epochs,batch_size=64,verbose=0,callbacks=mc_best)
+
+mae_history = history.history['val_mae']
+all_mae_histories.append(mae_history)
+
+average_mae_history=[
+   np.mean([x[i] for x in all_mae_histories]) for i in range(num_epochs)]
+def smooth_curve(points,factor=0.9):
+    smoothed_points=[]
+    for point in points:
+        if smoothed_points:
+            previous=smoothed_points[-1]
+            smoothed_points.append(previous*factor+point*(1-factor))
+        else:
+            smoothed_points.append(point)
+    return smoothed_points
+smooth_mae_history = smooth_curve(average_mae_history[300:])
+
+
+plt.plot(range(1,len(smooth_mae_history)+1),smooth_mae_history)
+plt.xlabel('Epochen')
+plt.ylabel('MAE Validierung')
+plt.show()
+
+model= tf.keras.models.load_model("Griewank_fkt_appro_rand_4Dto1D/best_model")
 test_mse_score,test_mae_score=model.evaluate(test_data,test_targets)
 print(test_mse_score)
 print(test_mae_score)
-
-#x_plot = scale_x.inverse_transform(x)
-#y_plot = scale_y.inverse_transform(y)
-#yhat = model.predict(x)
-
-#yhat_plot = scale_y.inverse_transform(yhat)
-#print('mse: %.7f' % mean_squared_error(y_plot, yhat_plot))
-
-#pyplot.scatter(x,y, label='Actual')
-#pyplot.scatter(x,yhat, label='Predicted')
-#pyplot.title('Input (x) versus Output (y)')
-#pyplot.xlabel('Input Variable (x)')
-#pyplot.ylabel('Output Variable (y)')
-#pyplot.legend()
-#pyplot.show()

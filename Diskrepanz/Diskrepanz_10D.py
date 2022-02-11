@@ -4,7 +4,7 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 import numpy as np
 from Halton_korrekt import halton
-from Uniform_Grid_10d import UG_10d
+from UniformGrid.Uniform_Grid_10D import UG_10d
 
 def count_range_in_list(li, min, max):
 	ctr = 0
@@ -18,7 +18,7 @@ b=1
 
 
 Dim=10
-n=1024
+n=4096
 rand=np.random.rand(n,Dim)
 
 

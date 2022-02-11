@@ -46,9 +46,9 @@ def surface_plot_2d(x_in: np.ndarray,y_in: np.ndarray, z_in: np.ndarray, lim_x: 
     z = z_in
 
     if log:
-        out = ax.plot_wireframe(x, y, z, rstride=1000, cstride=1000)
+        out = ax.plot_wireframe(x, y, z, cmap='jet', shade= "false", rstride=10, cstride=10)
     else:
-        out = ax.plot_surface(x, y, z, cmap='jet', shade= "false", rstride=20, cstride=20)
+        out = ax.plot_wireframe(x, y, z, cmap='jet', rstride=1, cstride=1)
     ax.set_title(title, fontsize=14)
     ax.set_xlabel(label_x)
     ax.set_ylabel(label_y)
@@ -72,5 +72,5 @@ Z= objective(X11,Y11)
 
 #x=x.reshape(10,1)
 #y=y.reshape(10,1)
-a=surface_plot_2d(X11,Y11,Z,log=True,color_map=1)
+#a=surface_plot_2d(X11,Y11,Z,log=True,color_map=1)
 

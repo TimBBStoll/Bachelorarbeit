@@ -29,4 +29,4 @@ Ew3=D3/100
 
 var=np.var(c)
 print(var)
-print(Ew3)
+#print(Ew3)

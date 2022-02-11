@@ -4,7 +4,7 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 import numpy as np
 from Halton_korrekt import halton
-from Uniform_Grid_3d_N import UG_3dN
+from UniformGrid.Uniform_Grid_3D_N import UG_3dN
 def count_range_in_list(li, min, max):
 	ctr = 0
 	for a,b,c, in li:
@@ -45,6 +45,6 @@ while i<=n:
 DisG3 = np.sqrt((1 / n) * D1)
 DisH3 = np.sqrt((1 / n) * D2)
 DisR3 = np.sqrt((1 / n) * D3)
-print(DisG3)
-print(DisH3)
-print(DisR3)
+#print(DisG3)
+#print(DisH3)
+#print(DisR3)

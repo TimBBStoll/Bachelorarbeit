@@ -21,7 +21,7 @@ for x in range(0,20):
         D2 = D2 + d_H
         i += 1
     Dis = np.sqrt((1 / n) * D2)
-    print(Dis)
+    #print(Dis)
     D3=D3+Dis
     #print(D3)
     c.append(Dis)

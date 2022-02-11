@@ -14,8 +14,16 @@ rand_4d=np.random.rand(4096,4)
 rand_6d=np.random.rand(4096,6)
 rand_10d=np.random.rand(4096,10)
 rand_12d=np.random.rand(4096,12)
+rand_2dp=np.random.rand(36,2)
+rand_2dp1=np.random.rand(36,2)
 
-
+rand_1du=np.random.rand(400,1)
+rand_2du=np.random.rand(400,2)
+rand_3du=np.random.rand(400,3)
+rand_4du=np.random.rand(400,4)
+rand_6du=np.random.rand(400,6)
+rand_10du=np.random.rand(400,10)
+rand_12du=np.random.rand(400,12)
 
 
 

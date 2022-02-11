@@ -1,3 +1,13 @@
+# This is a sample Python script.
+
+# Press Umschalt+F10 to execute it or replace it with your code.
+# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+
+
+# import von TF
+# Bereitet die grafische Ausgabe mittels contourf vor
+# und rastert die Eingabewerte fuer das Modell
+
 from numpy import arange
 from numpy import exp
 from numpy import sqrt
@@ -5,25 +15,26 @@ from numpy import cos
 from numpy import e
 from numpy import pi
 from numpy import meshgrid
-import numpy as np
+from scatterplot import scatter_plot_2d
+from surfaceplot import surface_plot_2d
+from surfaceplot2 import surface_plot_2d1
 import matplotlib.pyplot as plt
-from Halton_korrekt import Halton_2D
-import math
+
+def objective(a, b):
+ return (1+(1/4000)*a**2+(1/4000)*b**2-cos(a)*cos((1/2)*b*2**(1/2)))
 
 
-def f(x, y):
-    return 1+(1/4000)*x**2+(1/4000)*y**2-cos(x)*cos((1/2)*y*2**(1/2))
-
-x = np.linspace(-6, 6, 30)
-y = np.linspace(-6, 6, 30)
-
-X, Y = np.meshgrid(x, y)
-Z = f(X, Y)
-fig = plt.figure()
-ax = plt.axes(projection='3d')
-ax.contour3D(X, Y, Z, 50, cmap='binary')
-
-ax.set_xlabel('x')
-ax.set_ylabel('y')
-ax.set_zlabel('z');
+r_min, r_max = 0, 1
+xaxis = arange(r_min, r_max, 0.002)
+yaxis = arange(r_min, r_max, 0.002)
+x, y = meshgrid(xaxis, yaxis)
+results = objective(x, y)
+figure = plt.figure(figsize=(5.8, 4.7), dpi=400)
+axis = figure.gca( projection='3d')
+axis.plot_surface(x, y, results, cmap='jet', shade= "false")
 plt.show()
+#plt.contour(x,y,results)
+#plt.show()
+#plt.scatter(x, y, results)
+#plt.show()
+bvc=scatter_plot_2d(x,y,results,lim_x=(0,1),lim_y=(0,1),log=False,color_map=0,label_x= "Halton_2D", label_y="",title= "Griewank 2D")

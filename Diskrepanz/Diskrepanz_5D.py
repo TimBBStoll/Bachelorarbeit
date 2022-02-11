@@ -4,7 +4,7 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 import numpy as np
 from Halton_korrekt import halton
-from Uniform_Grid_5d import UG_5d
+from UniformGrid.Uniform_Grid_5D import UG_5d
 def count_range_in_list(li, min, max):
 	ctr = 0
 	for a,b,c,d,e in li:
@@ -12,7 +12,7 @@ def count_range_in_list(li, min, max):
 			ctr += 1
 	return ctr
 Dim=5
-n=1024
+n=4096
 rand=np.random.rand(n,Dim)
 list1=UG_5d
 list2=halton(Dim,n)

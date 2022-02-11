@@ -34,19 +34,19 @@ def surface_plot_2d1(x_in: np.ndarray,y_in: np.ndarray, z_in: np.ndarray, lim_x:
         c_map = 'jet'
 
     fig = plt.figure(figsize=(5.8, 4.7), dpi=400)
-    ax = fig.add_subplot(111, projection='3d')
+    ax = fig.add_subplot(111,projection='3d')
     x = x_in
     y = y_in
     z = z_in
 
     if log:
-        out = ax.plot_wireframe(x, y, z, rstride=20, cstride=20)
+        out = ax.plot_surface(x, y, z, cmap='jet', shade= "false", rstride=50, cstride=50)
     else:
         out = ax.plot_surface(x, y, z, cmap='jet', shade= "false", rstride=1, cstride=1)
-    ax.set_title(title, fontsize=14)
+    ax.set_title(title, fontsize=10)
     ax.set_xlabel(label_x)
     ax.set_ylabel(label_y)
-    cbar = fig.colorbar(out, ax=ax, extend='both')
+    cbar = fig.colorbar(out, ax=ax, extend='both',pad=0.1)
     if show_fig:
         plt.show()
     #plt.savefig(folder_name + "/" + name + ".png", dpi=150)
@@ -56,8 +56,7 @@ x = gitter[:,0]
 xn=10*x
 y = gitter[:,1]
 yn=10*y
-x11 = np.arange(0,10,0.001)
-y11 = np.arange(0,10,0.001)
+
 X11,Y11 = np.meshgrid(xn,yn)
 
 def objective(a, b):
@@ -69,5 +68,5 @@ Z= objective(X11,Y11)
 #x=x.reshape(10,1)
 #y=y.reshape(10,1)
 
-a=surface_plot_2d1(X11,Y11,Z,log=False,color_map=1,lim_x=(0,10),lim_y=(0,10))
+#a=surface_plot_2d1(X11,Y11,Z,log=False,color_map=1,lim_x=(0,10),lim_y=(0,10))
 

@@ -8,10 +8,10 @@ x=0
 D3=0
 c = []
 
-for x in range(0,100):
-    rand=np.random.rand(1024, 10)
+for x in range(0,20):
+    rand=np.random.rand(4096, 10)
     i=0
-    n=1024
+    n=4096
     D2=0
     while i<=n:
         d = i / n
@@ -20,13 +20,13 @@ for x in range(0,100):
         D2 = D2 + d_H
         i += 1
     Dis = np.sqrt((1 / n) * D2)
-    #print(Dis)
+    print(Dis)
     D3=D3+Dis
     #print(D3)
     c.append(Dis)
     x+=1
-Ew10=D3/100
+Ew10=D3/20
 
 var=np.var(c)
-print(var)
-print(Ew10)
+#print(var)
+#print(Ew10)

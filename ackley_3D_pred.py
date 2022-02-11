@@ -15,6 +15,9 @@ from numpy import cos
 from numpy import e
 from numpy import pi
 from numpy import meshgrid
+from scatterplot import scatter_plot_2d
+from surfaceplot import surface_plot_2d
+from surfaceplot2 import surface_plot_2d1
 import matplotlib.pyplot as plt
 
 def objective(x, y):
@@ -22,16 +25,17 @@ def objective(x, y):
   pi * x)+cos(2 * pi * y))) + e + 20
 
 
-r_min, r_max = -1, 1
-xaxis = arange(r_min, r_max, 0.2)
-yaxis = arange(r_min, r_max, 0.2)
+r_min, r_max = 0, 1
+xaxis = arange(r_min, r_max, 0.002)
+yaxis = arange(r_min, r_max, 0.002)
 x, y = meshgrid(xaxis, yaxis)
 results = objective(x, y)
-figure = plt.figure()
+figure = plt.figure(figsize=(5.8, 4.7), dpi=400)
 axis = figure.gca( projection='3d')
 axis.plot_surface(x, y, results, cmap='jet', shade= "false")
 plt.show()
-plt.contour(x,y,results)
-plt.show()
-plt.scatter(x, y, results)
-plt.show()
+#plt.contour(x,y,results)
+#plt.show()
+#plt.scatter(x, y, results)
+#plt.show()
+bvc=scatter_plot_2d(x,y,results,lim_x=(0,1),lim_y=(0,1),log=False,color_map=0,label_x= "Halton_2D", label_y="",title= "Ackleyfunktion 2D")

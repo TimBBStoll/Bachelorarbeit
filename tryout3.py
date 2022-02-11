@@ -1,92 +1,29 @@
-# This is a sample Python script.
-
-# Press Umschalt+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from math import *
 
 
-# import von TF
-# Bereitet die grafische Ausgabe mittels contourf vor
-# und rastert die Eingabewerte fuer das Modell
-
-from numpy import arange
 from numpy import exp
 from numpy import sqrt
 from numpy import cos
 from numpy import e
 from numpy import pi
-from numpy import meshgrid
-import matplotlib.pyplot as plt
+from random_korrekt import rand_2du
 import numpy as np
-from UniformGrid.Uniform_Grid_2D_Probe import UG_2dP
-# This is a sample Python script.
+import tensorflow as tf
 
-# Press Umschalt+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-# import von TF
-# Bereitet die grafische Ausgabe mittels contourf vor
-# und rastert die Eingabewerte fuer das Modell
-import matplotlib.pyplot as plt
-import random
-from numpy import arange
-from numpy import exp
-from numpy import sqrt
-from numpy import cos
-from numpy import e
-from numpy import pi
-from numpy import meshgrid
-import numpy as np
-from matplotlib import cm
-from matplotlib import colors
-from Halton_korrekt import Halton_2D
-from UniformGrid.Uniform_Grid_2D_Probe import UG_2dP
-from matplotlib import pyplot as plt
-import numpy as np
-import math
-from numba import jit, njit, vectorize, cuda, uint32, f8, uint8
-from pylab import imshow, show
-from timeit import default_timer as timer
-
-
-@jit
-def mandel(x, y, max_iters):
-    """
-      Given the real and imaginary parts of a complex number,
-      determine if it is a candidate for membership in the Mandelbrot
-      set given a fixed number of iterations.
-    """
-    c = complex(x, y)
-    z = 0.0j
-    for i in range(max_iters):
-        z = z * z + c
-        if (z.real * z.real + z.imag * z.imag) >= 4:
-            return i
-
-    return max_iters
-
-
-@jit
-def create_fractal(min_x, max_x, min_y, max_y, image, iters):
-    height = image.shape[0]
-    width = image.shape[1]
-
-    pixel_size_x = (max_x - min_x) / width
-    pixel_size_y = (max_y - min_y) / height
-
-    for x in range(width):
-        real = min_x + x * pixel_size_x
-        for y in range(height):
-            imag = min_y + y * pixel_size_y
-            color = mandel(real, imag, iters)
-            image[y, x] = color
-
-
-image = np.zeros((1024, 1536), dtype=np.uint8)
-start = timer()
-create_fractal(-2.0, 1.0, -1.0, 1.0, image, 20)
-dt = timer() - start
-
-print("Mandelbrot created in %f s" % dt)
-imshow(image)
-show()
+x = rand_2du
+x1= np.transpose(x)
+#samplefkt f(x)=polyfkt
+z=(x1[0,:]**2+x1[1,:]**2)
+z=np.reshape(z, (400, 1))
+a=(x1[0,:])
+a=np.reshape(a, (400, 1))
+b=(x1[1,:])
+b=np.reshape(b, (400, 1))
+def objective1(a,b):
+ return (-20 * exp(-0.2 * sqrt(0.5 * ((a**2+b**2))))-exp(0.5 * (cos(2 * pi * a)+cos(2 * pi * b))) + np.e + 20)
+test_data=x
+test_targets=objective1(a,b)
+model= tf.keras.models.load_model("Neuronal/ackley_fkt_appro_UG_2Dto1D/best_model")
+test_mse_score,test_mae_score=model.evaluate(test_data,test_targets)
+print(test_mse_score)
+print(test_mae_score)

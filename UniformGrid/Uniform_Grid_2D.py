@@ -5,7 +5,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error
-size = 2
+size = 64
 dim =2
 s_d = np.linspace ( 0.0, 1.0, size)
 

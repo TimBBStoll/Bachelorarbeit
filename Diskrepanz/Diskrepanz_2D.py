@@ -3,8 +3,8 @@
 # Press Umschalt+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 import numpy as np
-from halton.Halton_korrekt import halton
-from UniformGrid.Unifrom_Grid_2d import UG_2d
+from Halton_korrekt import halton
+from UniformGrid.Uniform_Grid_2D import UG_2d
 def count_range_in_list(li, min, max):
 	ctr = 0
 	for a,b in li:
@@ -12,7 +12,7 @@ def count_range_in_list(li, min, max):
 			ctr += 1
 	return ctr
 Dim=2
-n=1024
+n=4096
 rand=np.random.rand(n,Dim)
 list1=UG_2d
 list2=halton(Dim,n)

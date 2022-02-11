@@ -27,15 +27,9 @@ for l in range (0,size):
                     sx_0[k] = s_d[i]
                     sx_1[k] = s_d[j]
                     sx_2[k] = s_d[l]
-
-
-
                     s[k,0] = s_d[i]
                     s[k,1] = s_d[j]
                     s[k,2] = s_d[l]
-
-
-
                     k = k + 1
 UG_3dN=s
 x0=s[:,0]

@@ -4,7 +4,7 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 import numpy as np
 from Halton_korrekt import halton
-from Uniform_Grid_2d_N import UG_2dN
+from UniformGrid.Uniform_Grid_2D_N import UG_2dN
 def count_range_in_list(li, min, max):
 	ctr = 0
 	for a,b in li:
